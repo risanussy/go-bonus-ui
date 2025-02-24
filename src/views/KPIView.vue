@@ -38,7 +38,7 @@
             <td>
               <!-- TOMBOL Edit dan Hapus HANYA MUNCUL JIKA isAdmin = true -->
               <button
-                v-if="isAdmin"
+                v-if="isAdmin || isStaff"
                 class="btn btn-sm btn-warning me-1"
                 data-bs-toggle="modal"
                 data-bs-target="#editKpiModal"
@@ -224,6 +224,7 @@ const editForm = ref({
 
 // **Tambahkan** isAdmin state
 const isAdmin = ref(false)
+const isStaff = ref(false)
 
 // onMounted: load KPI + load categories + check role
 onMounted(() => {
@@ -242,6 +243,12 @@ function checkRole() {
     isAdmin.value = true
   } else {
     isAdmin.value = false
+  }
+
+  if (role === 'pegawai') {
+    isStaff.value = true
+  } else {
+    isStaff.value = false
   }
 }
 

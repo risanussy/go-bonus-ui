@@ -1,15 +1,24 @@
 <template>
   <div>
-    <h3>Kondite</h3>
+    <h3>Input Kondite</h3>
     <p>Form untuk input data kondite (pengurang poin) karyawan.</p>
-    <form @submit.prevent="submitKondite">
+
+    <!-- Form Input Kondite -->
+    <form @submit.prevent="submitKondite" class="border p-3 mb-4">
       <div class="mb-3">
         <label class="form-label">Nama Karyawan</label>
         <select class="form-select" v-model="selectedEmployee" required>
           <option value="">- Pilih -</option>
-          <option v-for="emp in employees" :key="emp.id" :value="emp.id">{{ emp.name }}</option>
+          <option 
+            v-for="emp in employees" 
+            :key="emp.ID" 
+            :value="emp.ID"
+          >
+            {{ emp.name }}
+          </option>
         </select>
       </div>
+
       <div class="mb-3">
         <label class="form-label">Kategori Kondite</label>
         <select class="form-select" v-model="selectedCategory" required>
@@ -19,15 +28,30 @@
           <option value="SP3">Surat Peringatan 3 (2)</option>
         </select>
       </div>
+
       <div class="mb-3">
         <label class="form-label">Masa Berlaku (Awal)</label>
-        <input type="date" class="form-control" v-model="startDate" required />
+        <input 
+          type="date" 
+          class="form-control" 
+          v-model="startDate" 
+          required
+        />
       </div>
+
       <div class="mb-3">
         <label class="form-label">Masa Berlaku (Akhir)</label>
-        <input type="date" class="form-control" v-model="endDate" required />
+        <input 
+          type="date" 
+          class="form-control" 
+          v-model="endDate" 
+          required
+        />
       </div>
-      <button class="btn btn-primary" type="submit">Simpan Kondite</button>
+
+      <button class="btn btn-primary" type="submit">
+        Simpan Kondite
+      </button>
     </form>
   </div>
 </template>
@@ -36,8 +60,10 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
-const konditeList = ref([])
+// Daftar karyawan
 const employees = ref([])
+
+// State form
 const selectedEmployee = ref('')
 const selectedCategory = ref('')
 const startDate = ref('')
@@ -45,29 +71,45 @@ const endDate = ref('')
 
 onMounted(() => {
   loadEmployees()
-  loadKonditeList()
 })
 
+// Ambil data karyawan (GET /api/employees)
 async function loadEmployees() {
   try {
     const token = localStorage.getItem('token')
     const res = await axios.get('http://localhost:8080/api/employees', {
       headers: { Authorization: 'Bearer ' + token }
     })
+    // Asumsi { data: [ { ID, Name, Email, ... }, ... ] }
     employees.value = res.data.data
   } catch (err) {
-    alert('Gagal memuat karyawan')
+    alert('Gagal memuat karyawan: ' + (err.response?.data?.error || err.message))
   }
 }
 
-async function loadKonditeList() {
-  // Placeholder: data kondite dari API
-  konditeList.value = [
-    { id: 1, employeeName: 'Persone One', category: 'SP1', period: '2025-01 s/d 2025-02' }
-  ]
-}
+// Simpan kondite (POST /api/kondites)
+async function submitKondite() {
+  try {
+    const token = localStorage.getItem('token')
+    const payload = {
+      employee_id: parseInt(selectedEmployee.value),
+      category: selectedCategory.value,
+      start_date: startDate.value,
+      end_date: endDate.value
+      // description: "opsional"
+    }
+    await axios.post('http://localhost:8080/api/kondites', payload, {
+      headers: { Authorization: 'Bearer ' + token }
+    })
+    alert('Kondite berhasil disimpan!')
 
-function submitKondite() {
-  alert('Simpan kondite (placeholder).')
+    // Reset form
+    selectedEmployee.value = ''
+    selectedCategory.value = ''
+    startDate.value = ''
+    endDate.value = ''
+  } catch (err) {
+    alert('Gagal menyimpan kondite: ' + (err.response?.data?.error || err.message))
+  }
 }
 </script>
