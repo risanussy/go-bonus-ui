@@ -49,6 +49,16 @@
         />
       </div>
 
+      <div class="mb-3">
+        <label class="form-label">Point Pengurangan</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          v-model="point" 
+          required
+        />
+      </div>
+
       <button class="btn btn-primary" type="submit">
         Simpan Kondite
       </button>
@@ -68,6 +78,7 @@ const selectedEmployee = ref('')
 const selectedCategory = ref('')
 const startDate = ref('')
 const endDate = ref('')
+const point = ref('')
 
 onMounted(() => {
   loadEmployees()
@@ -95,7 +106,8 @@ async function submitKondite() {
       employee_id: parseInt(selectedEmployee.value),
       category: selectedCategory.value,
       start_date: startDate.value,
-      end_date: endDate.value
+      end_date: endDate.value,
+      min_point: point.value
       // description: "opsional"
     }
     await axios.post('http://localhost:8080/api/kondites', payload, {
@@ -108,6 +120,7 @@ async function submitKondite() {
     selectedCategory.value = ''
     startDate.value = ''
     endDate.value = ''
+    point.value = ''
   } catch (err) {
     alert('Gagal menyimpan kondite: ' + (err.response?.data?.error || err.message))
   }

@@ -92,7 +92,7 @@
             <td>{{ item.category }}</td>
             <td>{{ formatDate(item.start_date) }}</td>
             <td>{{ formatDate(item.end_date) }}</td>
-            <td>{{ item.point }}</td>
+            <td>{{ item.min_point }}</td>
           </tr>
           <tr v-if="konditeList.length === 0">
             <td colspan="6" class="text-center">Belum ada data kondite</td>
@@ -175,7 +175,7 @@ async function createKondite() {
       category: newKondite.value.category,
       start_date: newKondite.value.start_date,
       end_date: newKondite.value.end_date,
-      point: Number(newKondite.value.point)
+      min_point: Number(newKondite.value.point)
     }
 
     await axios.post('http://localhost:8080/api/kondites', payload, {

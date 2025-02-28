@@ -1,17 +1,9 @@
 <template>
   <div class="container my-4">
-    <h3>Halaman Kalibrasi Karyawan</h3>
-    <p>
-      Menampilkan ringkasan KPI (Perusahaan, Departemen, Individu), 
-      lalu dikurangi poin (kondite) dan ditambahkan penambah poin 
-      (jika ada). Hasil akhirnya ditampilkan dalam kolom 
-      <strong>KPI Setelah Kalibrasi</strong>, beserta bonus.
-    </p>
+    <h3>Daftar Kalibrasi</h3>
+    <p>Menampilkan data kalibrasi (KPI Perusahaan, Depart, Individu, dsb.)</p>
 
-    <button 
-      class="btn btn-success mb-3"
-      @click="loadKalibrasi"
-    >
+    <button class="btn btn-success mb-3" @click="loadKalibrasi">
       Muat Data Kalibrasi
     </button>
 
@@ -19,34 +11,37 @@
       <table class="table table-bordered">
         <thead class="table-light">
           <tr>
+            <th>No</th>
             <th>Nama</th>
             <th>KPI Perusahaan</th>
             <th>KPI Depart</th>
             <th>KPI Individu</th>
             <th>Total KPI</th>
             <th>Pengurang Poin</th>
+            <th>Penambah Poin</th>
             <th>KPI Setelah Kalibrasi</th>
-            <th>Keterangan Skala</th>
+            <th>Keterangan</th>
+            <th>Gaji</th>
             <th>Bonus</th>
           </tr>
         </thead>
         <tbody>
-          <tr 
-            v-for="(item, index) in kalibrasiData" 
-            :key="index"
-          >
+          <tr v-for="(item, index) in kalibrasiData" :key="index">
+            <td>{{ item.no }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.kpi_perusahaan }}</td>
             <td>{{ item.kpi_depart }}</td>
             <td>{{ item.kpi_individu }}</td>
             <td>{{ item.total_kpi }}</td>
             <td>{{ item.pengurang_poin }}</td>
-            <td>{{ item.kpi_after_calibration }}</td>
+            <td>{{ item.penambah_poin }}</td>
+            <td>{{ item.kpi_setelah_kalibrasi }}</td>
             <td>{{ item.skala }}</td>
-            <td>{{ item.bonus }}</td>
+            <td>{{ formatCurrency(item.gaji) }}</td>
+            <td>{{ formatCurrency(item.bonus) }}</td>
           </tr>
           <tr v-if="kalibrasiData.length === 0">
-            <td colspan="9" class="text-center">Belum ada data kalibrasi</td>
+            <td colspan="12" class="text-center">Belum ada data kalibrasi</td>
           </tr>
         </tbody>
       </table>
@@ -56,50 +51,34 @@
 
 <script setup>
 import { ref } from 'vue'
-// import axios from 'axios'  // Jika ingin memanggil API sebenarnya
+import axios from 'axios'
 
+// State menampung data kalibrasi
 const kalibrasiData = ref([])
 
-// Fungsi memuat data kalibrasi (contoh placeholder)
+// Fungsi load data kalibrasi dari API
 async function loadKalibrasi() {
   try {
-    // const token = localStorage.getItem('token')
-    // const res = await axios.get('http://localhost:8080/api/kalibrasi', {
-    //   headers: { Authorization: 'Bearer ' + token }
-    // })
-    // kalibrasiData.value = res.data.data
-
-    // Contoh data statis:
-    kalibrasiData.value = [
-      {
-        name: 'Anggi',
-        kpi_perusahaan: 0.3,
-        kpi_depart: 1.2,
-        kpi_individu: 0.8,
-        total_kpi: 2.3,
-        pengurang_poin: 0.1,
-        kpi_after_calibration: 2.2,
-        skala: 'Outstanding',
-        bonus: 8000000
-      },
-      {
-        name: 'Budi',
-        kpi_perusahaan: 0.4,
-        kpi_depart: 0.9,
-        kpi_individu: 1.0,
-        total_kpi: 2.3,
-        pengurang_poin: 0.3,
-        kpi_after_calibration: 2.0,
-        skala: 'Good',
-        bonus: 5000000
-      }
-    ]
+    const token = localStorage.getItem('token') // Jika perlu JWT
+    const res = await axios.get('http://localhost:8080/api/kalibrasi', {
+      headers: { Authorization: 'Bearer ' + token }
+    })
+    kalibrasiData.value = res.data.data
   } catch (err) {
-    alert('Gagal memuat data kalibrasi')
+    alert('Gagal memuat data kalibrasi: ' + (err.response?.data?.error || err.message))
   }
+}
+
+// Fungsi format ke Rupiah
+function formatCurrency(val) {
+  if (!val) return '0'
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR'
+  }).format(val)
 }
 </script>
 
 <style scoped>
-/* Opsional: styling tambahan */
+/* Opsional styling */
 </style>

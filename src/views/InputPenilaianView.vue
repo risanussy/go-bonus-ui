@@ -7,19 +7,19 @@
           <label class="form-label">Pilih Karyawan</label>
           <select class="form-select" v-model="selectedEmployee" required>
             <option value="">- Pilih -</option>
-            <option v-for="emp in employees" :key="emp.id" :value="emp.id">{{ emp.name }}</option>
+            <option v-for="emp in employees" :key="emp.ID" :value="emp.ID">{{ emp.name }}</option>
           </select>
         </div>
         <div class="mb-3">
           <label class="form-label">Pilih KPI</label>
           <select class="form-select" v-model="selectedKPI" required>
             <option value="">- Pilih -</option>
-            <option v-for="kpi in kpis" :key="kpi.id" :value="kpi.id">{{ kpi.title }}</option>
+            <option v-for="kpi in kpis" :key="kpi.ID" :value="kpi.ID">{{ kpi.title }}</option>
           </select>
         </div>
         <div class="mb-3">
           <label class="form-label">Hasil Pencapaian</label>
-          <input type="text" class="form-control" v-model="achievement" placeholder="Contoh: 80 Juta" required />
+          <input type="tel" max="5" class="form-control" v-model="achievement" placeholder="Contoh: 1 - 5" required />
         </div>
         <button class="btn btn-primary" type="submit">Simpan Penilaian</button>
       </form>
