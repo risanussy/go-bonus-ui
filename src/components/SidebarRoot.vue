@@ -13,7 +13,7 @@
       />
     </div>
     <h6 class="text-center fw-bold mt-3">Nama Karyawan</h6>
-    <small class="text-center d-block">16022025</small>
+    <!-- <small class="text-center d-block">16022025</small> -->
     <hr class="my-3" />
 
     <!-- Menu umum -->
@@ -29,22 +29,21 @@
       <router-link to="/dashboard/kalibrasi" class="menu-link">
         <i class="bi bi-sliders me-2"></i> Kalibrasi
       </router-link>
+      <hr class="text-white" />
+      <small>Master</small>
+
+      <router-link to="/dashboard/input-kpi" class="menu-link">
+        <i class="bi bi-journal-plus me-2"></i> Input KPI
+      </router-link>
+
+      <router-link to="/dashboard/input-penilaian" class="menu-link">
+        <i class="bi bi-pencil-square me-2"></i> Input Penilaian KPI
+      </router-link>
 
       <!-- Bagian MASTER hanya tampil jika isAdmin = true -->
       <template v-if="isAdmin">
-        <hr class="text-white" />
-        <small>Master</small>
-
         <router-link to="/dashboard/kondite-input" class="menu-link">
           <i class="bi bi-archive-fill me-2"></i> Input Kondite
-        </router-link>
-
-        <router-link to="/dashboard/input-kpi" class="menu-link">
-          <i class="bi bi-journal-plus me-2"></i> Input KPI
-        </router-link>
-
-        <router-link to="/dashboard/input-penilaian" class="menu-link">
-          <i class="bi bi-pencil-square me-2"></i> Input Penilaian KPI
         </router-link>
 
         <router-link to="/dashboard/master-setting-kpi" class="menu-link">
