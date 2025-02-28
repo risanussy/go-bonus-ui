@@ -36,7 +36,7 @@
             <td>{{ kpi.score }}</td>
             <td>{{ kpi.validated }}</td>
             <td>
-              <!-- TOMBOL Edit dan Hapus HANYA MUNCUL JIKA isAdmin = true -->
+              <!-- TOMBOL Edit dan Hapus HANYA MUNCUL JIKA isAdmin atau isStaff -->
               <button
                 v-if="isAdmin || isStaff"
                 class="btn btn-sm btn-warning me-1"
@@ -222,11 +222,11 @@ const editForm = ref({
   exceptional: ''
 })
 
-// **Tambahkan** isAdmin state
+// State untuk role
 const isAdmin = ref(false)
 const isStaff = ref(false)
 
-// onMounted: load KPI + load categories + check role
+// onMounted: load KPI, kategori, dan cek role
 onMounted(() => {
   loadKPIs()
   loadCategories()
@@ -252,7 +252,7 @@ function checkRole() {
   }
 }
 
-// Fungsi parse JWT (payload) untuk dapatkan role
+// Fungsi parse JWT (payload) untuk mendapatkan role
 function parseRoleFromToken(token) {
   try {
     const base64Url = token.split('.')[1]
@@ -326,7 +326,7 @@ function prepareEdit(kpi) {
   editForm.value.exceptional = parsed.exceptional
 }
 
-// Simpan perubahan
+// Simpan perubahan edit
 async function saveEditKPI() {
   try {
     const token = localStorage.getItem('token')
@@ -347,7 +347,7 @@ async function saveEditKPI() {
   }
 }
 
-// Fungsi parse description
+// Fungsi parse description untuk mengambil data kategori, bobot, target, dan skala penilaian
 function parseDescription(desc) {
   const result = {
     kategori: '',
@@ -405,3 +405,7 @@ function parseScaleString(str, result) {
   }
 }
 </script>
+
+<style scoped>
+/* Opsional styling tambahan */
+</style>
