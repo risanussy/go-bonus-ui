@@ -3,9 +3,9 @@
     <h3>Daftar Kalibrasi</h3>
     <p>Menampilkan data kalibrasi (KPI Perusahaan, Depart, Individu, dsb.)</p>
 
-    <button class="btn btn-success mb-3" @click="loadKalibrasi">
+    <!-- <button class="btn btn-success mb-3" @click="loadKalibrasi">
       Muat Data Kalibrasi
-    </button>
+    </button> -->
 
     <div class="table-responsive">
       <table class="table table-bordered">
@@ -50,11 +50,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 // State menampung data kalibrasi
 const kalibrasiData = ref([])
+
+// onMounted => panggil loadKalibrasi()
+onMounted(() => {
+  loadKalibrasi()
+})
 
 // Fungsi load data kalibrasi dari API
 async function loadKalibrasi() {
@@ -78,6 +83,7 @@ function formatCurrency(val) {
   }).format(val)
 }
 </script>
+
 
 <style scoped>
 /* Opsional styling */
