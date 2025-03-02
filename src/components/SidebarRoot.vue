@@ -6,13 +6,13 @@
       style="margin: auto;"
     >
       <img
-        src="@/assets/unindra.jpeg"
+        src="@/assets/logo.png"
         class="w-100"
         style="transform: translateY(0px);"
         alt="User Image"
       />
     </div>
-    <h6 class="text-center fw-bold mt-3">Nama Karyawan</h6>
+    <h6 class="text-center fw-bold mt-3">{{ name }}</h6>
     <!-- <small class="text-center d-block">16022025</small> -->
     <hr class="my-3" />
 
@@ -26,24 +26,25 @@
         <i class="bi bi-card-checklist me-2"></i> KPI
       </router-link>
 
-      <router-link to="/dashboard/kalibrasi" class="menu-link">
-        <i class="bi bi-sliders me-2"></i> Kalibrasi
-      </router-link>
-      <hr class="text-white" />
-      <small>Master</small>
-
       <router-link to="/dashboard/input-kpi" class="menu-link">
         <i class="bi bi-journal-plus me-2"></i> Input KPI
       </router-link>
 
-      <router-link to="/dashboard/input-penilaian" class="menu-link">
-        <i class="bi bi-pencil-square me-2"></i> Input Penilaian KPI
+      <router-link to="/dashboard/kalibrasi" class="menu-link">
+        <i class="bi bi-sliders me-2"></i> Kalibrasi
       </router-link>
 
-      <!-- Bagian MASTER hanya tampil jika isAdmin = true -->
+      
       <template v-if="isAdmin">
+        <hr class="text-white" />
+        <small>Master</small>
+        <!-- Bagian MASTER hanya tampil jika isAdmin = true -->
         <router-link to="/dashboard/kondite-input" class="menu-link">
           <i class="bi bi-archive-fill me-2"></i> Input Kondite
+        </router-link>
+
+        <router-link to="/dashboard/input-penilaian" class="menu-link">
+          <i class="bi bi-pencil-square me-2"></i> Input Penilaian KPI
         </router-link>
 
         <router-link to="/dashboard/master-setting-kpi" class="menu-link">
@@ -71,6 +72,7 @@ import { useRouter } from 'vue-router'
 
 // State penentu apakah user adalah admin
 const isAdmin = ref(false)
+const name = ref('')
 
 const router = useRouter()
 
@@ -82,6 +84,7 @@ function logout() {
 // Saat komponen di-mount, kita parse JWT untuk dapatkan role
 onMounted(() => {
   checkRole()
+  name.value = localStorage.getItem('name')
 })
 
 function checkRole() {

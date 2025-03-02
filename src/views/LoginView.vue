@@ -105,9 +105,13 @@ async function doLogin() {
     })
 
     // Misal respons: { "token": "...", "role": "admin" }
+    console.log(res.data);
+    
 
     // Simpan token ke localStorage
     localStorage.setItem('token', res.data.token)
+    localStorage.setItem('name', res.data.name)
+    localStorage.setItem('role', res.data.role)
 
     // Simpan role ke cookies (misal, berlaku 1 hari)
     // Date.now() / 1000 => detik, x 86400 => 1 hari
