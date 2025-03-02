@@ -3,10 +3,7 @@
     <h3>Daftar Kalibrasi</h3>
     <p>Menampilkan data kalibrasi (KPI Perusahaan, Depart, Individu, dsb.)</p>
 
-    <!-- <button class="btn btn-success mb-3" @click="loadKalibrasi">
-      Muat Data Kalibrasi
-    </button> -->
-
+    <!-- Tabel Kalibrasi -->
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead class="table-light">
@@ -26,6 +23,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Loop data kalibrasiData -->
           <tr v-for="(item, index) in kalibrasiData" :key="index">
             <td>{{ item.no }}</td>
             <td>{{ item.name }}</td>
@@ -64,10 +62,12 @@ onMounted(() => {
 // Fungsi load data kalibrasi dari API
 async function loadKalibrasi() {
   try {
-    const token = localStorage.getItem('token') // Jika perlu JWT
+    // Jika perlu JWT token
+    const token = localStorage.getItem('token')
     const res = await axios.get('http://localhost:8080/api/kalibrasi', {
       headers: { Authorization: 'Bearer ' + token }
     })
+    // Asumsi response: { data: [...] }
     kalibrasiData.value = res.data.data
   } catch (err) {
     alert('Gagal memuat data kalibrasi: ' + (err.response?.data?.error || err.message))
@@ -84,7 +84,6 @@ function formatCurrency(val) {
 }
 </script>
 
-
 <style scoped>
-/* Opsional styling */
+/* Opsional styling tambahan */
 </style>

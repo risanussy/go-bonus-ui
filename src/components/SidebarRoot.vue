@@ -22,12 +22,12 @@
         <i class="bi bi-exclamation-circle me-2"></i> Kondite
       </router-link>
 
-      <router-link to="/dashboard/kpi" class="menu-link">
+      <!-- <router-link to="/dashboard/kpi" class="menu-link">
         <i class="bi bi-card-checklist me-2"></i> KPI
-      </router-link>
+      </router-link> -->
 
       <router-link to="/dashboard/input-kpi" class="menu-link">
-        <i class="bi bi-journal-plus me-2"></i> Input KPI
+        <i class="bi bi-journal-plus me-2"></i> KPI
       </router-link>
 
       <router-link to="/dashboard/kalibrasi" class="menu-link">
