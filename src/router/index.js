@@ -12,6 +12,7 @@ import InputPenilaianView from '@/views/InputPenilaianView.vue'
 import MasterSettingKPIView from '@/views/MasterSettingKPIView.vue'
 import KPIView from '@/views/KPIView.vue'
 import EmployeeView from '@/views/EmployeeView.vue'
+import ReportView from '@/views/ReportView.vue'
 
 const routes = [
   {
@@ -31,7 +32,8 @@ const routes = [
       { path: 'input-penilaian', name: 'inputPenilaian', component: InputPenilaianView },
       { path: 'master-setting-kpi', name: 'masterSettingKPI', component: MasterSettingKPIView },
       { path: 'kpi', name: 'masterKPI', component: KPIView },
-      { path: 'employee', name: 'employee', component: EmployeeView }
+      { path: 'employee', name: 'employee', component: EmployeeView },
+      { path: 'report', name: 'report', component: ReportView }
     ]
   },
   { path: '/', redirect: '/dashboard/kondite' },

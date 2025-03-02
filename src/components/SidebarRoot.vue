@@ -39,6 +39,9 @@
         <hr class="text-white" />
         <small>Master</small>
         <!-- Bagian MASTER hanya tampil jika isAdmin = true -->
+        <router-link to="/dashboard/report" class="menu-link">
+          <i class="bi bi-card-checklist me-2"></i> Report
+        </router-link>
         <router-link to="/dashboard/kondite-input" class="menu-link">
           <i class="bi bi-archive-fill me-2"></i> Input Kondite
         </router-link>
