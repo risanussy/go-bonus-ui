@@ -94,8 +94,8 @@
         </thead>
         <tbody>
           <!-- Gunakan evalu.id (lowercase) -->
-          <tr v-for="evalu in evaluationList" :key="evalu.id">
-            <td>{{ evalu.id }}</td>
+          <tr v-for="evalu in evaluationList" :key="evalu.ID">
+            <td>{{ evalu.ID }}</td>
             <td>{{ evalu.employee_id }}</td>
             <td>{{ evalu.kpi_id }}</td>
             <td>{{ evalu.achievement }}</td>
